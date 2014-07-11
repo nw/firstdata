@@ -1,0 +1,6 @@
+{
+  "hmac": "<hmac>"
+, "key": "<key id>"
+, "gateway_id": "<gateway id>"
+, "password": "<password>" 
+}
