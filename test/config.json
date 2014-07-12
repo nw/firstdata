@@ -3,4 +3,5 @@
 , "key": "<key id>"
 , "gateway_id": "<gateway id>"
 , "password": "<password>" 
+, "sandbox": true
 }
