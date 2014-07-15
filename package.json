@@ -1,0 +1,36 @@
+{
+  "name": "firstdata",
+  "version": "0.0.1",
+  "description": "First Data Global Gateway E4 - Payment Gateway",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nw/firstdata"
+  },
+  "keywords": [
+    "payment",
+    "money",
+    "ecommerce",
+    "firstdata",
+    "e4",
+    "credit",
+    "card"
+  ],
+  "author": "Nathan White <_@nw.is>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nw/firstdata/issues"
+  },
+  "homepage": "https://github.com/nw/firstdata",
+  "dependencies": {
+    "superagent": "^0.18.1",
+    "libxmljs": "^0.11.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.20.1",
+    "should": "^4.0.4"
+  }
+}
