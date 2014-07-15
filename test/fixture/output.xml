@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <account>DEMO</account>
+  <start_date>Thu Jul 10 00:00:00 UTC 2014</start_date>
+  <end_date>Sun Jul 13 23:59:59 UTC 2014</end_date>
+  <type>DECLINED</type>
+  <terminal>
+    <name>DEMO TERM ECOMM</name>
+    <card>
+      <name>Stored Value Funded</name>
+      <transaction>
+        <type>Purchase</type>
+        <count>3</count>
+        <currency>USD</currency>
+        <amount>1500.00</amount>
+      </transaction>
+      <totals>
+        <type>Stored Value Funded</type>
+        <count>3</count>
+        <currency/>
+        <amount>1500.00</amount>
+      </totals>
+    </card>
+    <card>
+      <name>VISA</name>
+      <transaction>
+        <type>Purchase</type>
+        <count>2480</count>
+        <currency>USD</currency>
+        <amount>13586005.56</amount>
+      </transaction>
+      <transaction>
+        <type>Pre-Authorization</type>
+        <count>1</count>
+        <currency>USD</currency>
+        <amount>5111.00</amount>
+      </transaction>
+      <totals>
+        <type>VISA</type>
+        <count>2481</count>
+        <currency/>
+        <amount>13591116.56</amount>
+      </totals>
+    </card>
+    <totals>
+      <count>2484</count>
+      <currency>USD</currency>
+      <amount>13592616.56</amount>
+    </totals>
+  </terminal>
+</report>

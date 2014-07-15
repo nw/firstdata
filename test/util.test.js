@@ -1,5 +1,8 @@
-var utils = require('../').utils;
+var fs = require('fs')
+  , libxml = require('libxmljs')
+  , utils = require('../').utils;
 
+var xml = fs.readFileSync(__dirname +'/fixture/output.xml');
 
 describe('utils.merge', function(){
 
@@ -64,3 +67,48 @@ describe('utils.isObj', function(){
   })
   
 });
+
+
+describe('utils.parseXML', function(){
+  
+  it('should return json from XML buffer', function(){
+    checkXML(utils.parseXML(xml));
+  });
+  
+  it('should return json from XML string', function(){
+    checkXML(utils.parseXML(xml.toString()));
+  });
+  
+  it('should return json from libxmljs Node', function(){
+    var root = libxml.parseXmlString(xml, { noblanks: true });
+    checkXML(utils.parseXML(root));
+  });
+  
+})
+
+
+
+function checkXML(result){
+  
+  result.account.should.eql('DEMO');
+  result.start_date.should.be.ok;
+  result.end_date.should.be.ok;
+  result.type.should.eql('DECLINED');
+
+  result.terminal.name.should.eql('DEMO TERM ECOMM');
+  result.terminal.card.length.should.eql(2);
+  
+  var card1 = result.terminal.card[0]
+    , card2 = result.terminal.card[1];
+    
+  card1.name.should.eql("Stored Value Funded");
+  card1.transaction.type.should.eql('Purchase');
+  card1.transaction.currency.should.eql('USD');
+  card1.totals.type.should.eql('Stored Value Funded');
+  card1.totals.should.have.properties('type', 'count', 'currency', 'amount');
+  
+  result.terminal.totals.count.should.eql(2484);
+  result.terminal.totals.currency.should.eql('USD');
+  result.terminal.totals.amount.should.eql('13592616.56');
+}
+
