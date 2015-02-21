@@ -2,4 +2,5 @@
 --reporter spec
 --ui bdd
 --slow 1000
+--timeout 5000
 --colors

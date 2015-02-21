@@ -36,7 +36,7 @@ describe('utils.merge', function(){
       , obj2 = { test: 'this', nest: { prop: 2}}
       , output = utils.merge(obj1, obj2);
 
-    output.should.eql(obj1);  
+    output.should.eql(obj1);
     output.test.should.eql('this');
     output.nest.prop.should.eql(2);
   });
@@ -53,7 +53,7 @@ describe('utils.merge', function(){
 
 
 describe('utils.isObj', function(){
-  
+
   it('should return true for object', function(){
     utils.isObj({}).should.be.ok;
   });
@@ -65,31 +65,31 @@ describe('utils.isObj', function(){
     utils.isObj(null).should.be.false;
     utils.isObj([1,2,3]).should.be.false;
   })
-  
+
 });
 
 
 describe('utils.parseXML', function(){
-  
+
   it('should return json from XML buffer', function(){
     checkXML(utils.parseXML(xml));
   });
-  
+
   it('should return json from XML string', function(){
     checkXML(utils.parseXML(xml.toString()));
   });
-  
+
   it('should return json from libxmljs Node', function(){
     var root = libxml.parseXmlString(xml, { noblanks: true });
     checkXML(utils.parseXML(root));
   });
-  
+
 })
 
 
 
 function checkXML(result){
-  
+
   result.account.should.eql('DEMO');
   result.start_date.should.be.ok;
   result.end_date.should.be.ok;
@@ -97,18 +97,17 @@ function checkXML(result){
 
   result.terminal.name.should.eql('DEMO TERM ECOMM');
   result.terminal.card.length.should.eql(2);
-  
+
   var card1 = result.terminal.card[0]
     , card2 = result.terminal.card[1];
-    
+
   card1.name.should.eql("Stored Value Funded");
   card1.transaction.type.should.eql('Purchase');
   card1.transaction.currency.should.eql('USD');
   card1.totals.type.should.eql('Stored Value Funded');
   card1.totals.should.have.properties('type', 'count', 'currency', 'amount');
-  
-  result.terminal.totals.count.should.eql(2484);
+
+  result.terminal.totals.count.should.eql('2484');
   result.terminal.totals.currency.should.eql('USD');
   result.terminal.totals.amount.should.eql('13592616.56');
 }
-

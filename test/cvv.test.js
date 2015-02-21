@@ -1,3 +1,4 @@
+
 var firstdata = require('../')
   , FirstDataClient = firstdata.Client
   , config = require('./config.json')
@@ -7,6 +8,7 @@ var firstdata = require('../')
   , cvv = firstdata.codes.cvv
   , amount = 10;
 
+// https://firstdata.zendesk.com/entries/407655-How-to-test-CVD-CVV-CVV2-functionality
 // we can only test 1-6 in {3} digits
 // 034, 794, 963 all fail would expect 'I' (no cvv2 in response)
 // however 03, 79, 96 all respond with cvv2 = 'I'
@@ -14,10 +16,10 @@ var validate = ['M', 'N', 'P', 'S', 'U', 'I'];
 
 
 describe('CVD/CVV/CVV2 Responses', function(){
-  
-  
+
+
   validate.forEach(function(code, idx){
-    
+
     it('should produce cvv code ('+code+') - '+ cvv[code], function(done){
       client.purchase({
         amount: amount++
@@ -32,17 +34,17 @@ describe('CVD/CVV/CVV2 Responses', function(){
         resp.isApproved().should.be.ok;
         resp.code.should.eql("00");
         resp.bank_code.should.equal("100");
-      
+
         resp.data.cvv2.should.eql(code);
-      
+
         done(err);
       });
-    
+
     })
-    
+
   });
-  
+
   // TODO: test v14 since it has a different signature
-  
-  
+
+
 });

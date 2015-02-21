@@ -7,15 +7,15 @@ var firstdata = require('../')
   , avs = firstdata.codes.avs
   , amount = 20;
 
-
-// DISABLED: F,I,M all International codes that fail in testing!
+// https://firstdata.zendesk.com/entries/23872458-How-to-test-AVS-Response-Codes-in-Demo
+// DISABLED: 9, F,I,M,P all International codes that fail in testing!
 var validate = '12345678ABCDEGNPQRSUWXYZ'.split('');
 
 describe('AVS Responses', function(){
-  
-  
+
+
   validate.forEach(function(code){
-    
+
     it('should produce cvv code ('+code+') - '+ (avs[code] || "fake"), function(done){
       client.purchase({
         amount: amount++
@@ -26,9 +26,8 @@ describe('AVS Responses', function(){
       , cc_verification_str1: code + "123 Main St"
       // , cc_verification_str2: (idx + 1) + '43'
       }, function(err, resp){
-        
+
         if(!avs[code]){
-          //console.log(resp)
           resp.code.should.eql("31");
           err.code.should.eql("31");
           resp.bank_code.should.eql("000");
@@ -38,17 +37,17 @@ describe('AVS Responses', function(){
           resp.isApproved().should.be.ok;
           resp.code.should.eql("00");
           resp.bank_code.should.equal("100");
-    
+
           resp.data.avs.should.eql(code);
         }
         done();
       });
-    
+
     })
-    
+
   });
-  
+
   // TODO: test v14 since it has a different signature
-  
-  
+
+
 });
