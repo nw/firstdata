@@ -88,6 +88,7 @@ Test Accounts are automatically provisioned, will remain active for 90 days with
       , password: '<password>'
       , hmac: '<hmac string>'
       , timeout: 3000
+      , admin: {username: '<username>', password: '<password>'} // search & report api
       , sandbox: true });
 
   client.purchase({
@@ -268,7 +269,76 @@ TransArmor Transaction required fields:
 
 ### Response Instance
 
+__This object is frozen and read-only (immutable).__
 
+With the exception of `search` & `report` all methods return an instance of `FirstDataResponse`.
+
+It is important to note that regardless of errors `gateway` & `bank` responses are set. The following are the defaults if not found in response.
+
+* `gateway`: is set to `40` (Unable to Connect)
+* `bank`: is set to `000` (No Answer)
+
+### Errors
+
+`FirstDataResponse` will explicitly create special error objects if the transactions don't meet specific criteria.
+
+* If a network error occurs from `https.request` then the error object is return. (connection reset, socket timeout, unable to connect).
+* If no network error and gateway response does not equal `00` then a `ResponseError` is created.
+* If no network error or `ResponseError` and `isSuccessful` == {false} then a `BankError` is created.
+
+
+### Properties
+
+* `req_headers`: {Object} HTTP headers users for the request.
+* `payload`: {String} Serialized JSON data sent to FirstData.
+* `headers`: {Object} HTTP headers received from FirstData response.
+* `raw`: {String} Original response body, regardless of parse errors.
+* `data`: {Object} Parsed body. See [FirstData API docs](https://firstdata.zendesk.com/entries/407571-First-Data-Global-Gateway-e4-Web-Service-API-Reference-Guide) for more info.
+* `statusCode`: {String} HTTP response status code.
+* `error`: {Error} - Could be undefined if no error occurred. ** See note below.
+* `gateway` {Object}
+  * `code`: {String} FirstData Gateway response code
+  * `message`: {String} Message explaining code.
+* `bank` {Object}
+  * `code`: {String} Bank response code.
+  * `type`: {String} Type of response. * See type table
+  * `name`: {String} Name of response
+  * `action`: {String} Action to take with response code. * See action table
+  * `description`: {String} Description of response.
+  * `actual`: {String} (optional). This is the actual response name if it differs from FirstData documentation.
+
+__Bank Response Types__
+
+* `S`: Successful
+* `R`: Reject
+* `D`: Decline
+* `R\D`: Reject or Decline
+* `U`: Unknown/Undocumented. Action is automatically set to 'Call'.
+
+__Bank Response Actions__
+
+* `Resend`: Send this transaction back at any time.
+* `Wait`: Wait 2-3 days before sending back, or try to resolve with your customer
+* `Cust`: Try to resolve with customer, or get an alternate method of payment
+* `Fix`: There is an invalid field being sent Fix and resend.
+* `N/A`: Not applicable
+* `Voice`: Perform a voice authorization per First Data instructions.
+* `Call`: Call First Data.
+
+
+### Methods
+
+#### response.isError
+
+#### response.isSuccessful
+
+Returns true if gateway code = `00` and bank response type = 'S'.
+
+#### response.isApproved
+
+Requires the bank response to be `S` (successful). In addition the payload must contain field `transaction_approved` set to 1.
+
+It is important to note that several bank responses will be successful yet will not pass the `isApproved` test like (164) - 'Conditional Approval - Hold shipping for 24 hours'.
 
 
 ### Search
