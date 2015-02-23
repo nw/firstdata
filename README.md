@@ -16,14 +16,14 @@ Focus is on version 12+ by implementing the required [SHA-1 HMAC hash](https://f
 
 Some error codes are currently "untestable" within the integration test environment. This library covers significantly more response types then what is listed in the documentation or any other library. Many undocumented responses have been found thus far. (See Test section for more info).
 
-__can't f#$k with money__
-
 ## Features
 
+* 100% test coverage
 * Over 300 integration tests.
 * Insane Error Handling
   * 25 undocumented gateway response codes
-  * 23 undocumented bank response codes
+  * 33 undocumented bank response codes
+  * 23 bank responses with different names then in docs.
   * 8 Additional custom codes to handle quirks.
 * Reporting & Search API
 * International Support: ~250 countries, ~150 currencies
@@ -109,7 +109,7 @@ Class for creating a First Data api client.
 
 ### firstdata.Response
 
-Class for creating a First Data response object. Client instances automatically return this.
+Class for creating a First Data response object. A `Client` instance  automatically return this. See [Response Instance]()
 
 ### firstdata.createClient(options, defaults)
 
@@ -155,7 +155,36 @@ __Note__: `gateway_id` & `password` are required for every transaction and are a
 
 Returns an instance of `Client`
 
+#### firstdata.isCountry(code)
+
+Checks if a country code is
+
+#### firstdata.getCountry(code)
+
+#### firstdata.isCurrency(code)
+
+#### firstdata.getCurrency(code)
+
+#### firstdata.isUnit(code)
+
+#### firstdata.getUnit(code)
+
+#### firstdata.isTax(code)
+
+#### firstdata.getTax(code)
+
+
 ### Client Instance
+
+FirstData has several different types of transactions.
+
+* `Regular` - Credit Card
+* `PayPal` - PayPal
+* `ValueLink` - FirstData physical and virtual gift cards.
+* `TransArmor` - Token Replacement for easier PCI compliance
+* `TeleCheck` - Check processing
+
+
 
 #### client.send(transaction_type, payload, callback)
 
@@ -236,27 +265,17 @@ TransArmor Transaction required fields:
 
 #### client.deactivation(payload, callback)
 
-#### firstdata.isCountry(code)
 
-#### firstdata.getCountry(code)
+### Response Instance
 
-#### firstdata.isCurrency(code)
 
-#### firstdata.getCurrency(code)
 
-#### firstdata.isUnit(code)
-
-#### firstdata.getUnit(code)
-
-#### firstdata.isTax(code)
-
-#### firstdata.getTax(code)
 
 ### Search
 
 First Data returns csv. This
 
-```
+```js
   var search = firstdata.search({
     start_date: '2014-07-12'
   , end_date: '2014-07-15' }, function(err, data){
@@ -295,7 +314,17 @@ This section describes how to use a magnetic card reader with the api.
 
 ** TODO **
 
+## TeleCheck
+
+** TODO **
+
+## ValueLink (Gift Cards)
+
+** TODO **
+
 ## PayPal
+
+** TODO **
 
 ## Testing
 
@@ -304,18 +333,19 @@ The majority of the tests are integration tests with FirstData E4 Gateway. In or
 * Setup a Test account (see Setup)
 * Install mocha globally `npm install mocha -g`
 * Create `test/config.json` example:
-    ```js
-    {
-      "name": "test-api"
-    , "hmac": "<HMAC>"
-    , "key": "<KEY>"
-    , "gateway_id": "<GATEWAY_ID>"
-    , "password": "<API_PASSWORD>"
-    , "sandbox": true
-    , "admin": { "username": "<USERNAME>", "password": "<PASSWORD>"}
-    }
-    ```
 
+```js
+{
+  "name": "test-api"
+, "hmac": "<HMAC>"
+, "key": "<KEY>"
+, "gateway_id": "<GATEWAY_ID>"
+, "password": "<API_PASSWORD>"
+, "sandbox": true
+, "admin": { "username": "<USERNAME>", "password": "<PASSWORD>"}
+}
+    ```
+__Run Tests__  with `npm test` or `mocha`
 
 
 
