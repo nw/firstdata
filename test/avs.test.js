@@ -28,15 +28,15 @@ describe('AVS Responses', function(){
           }, function(err, resp){
 
             if(!avs[code]){
-              resp.code.should.eql("31");
+              resp.gateway.code.should.eql("31");
               err.code.should.eql("31");
               resp.bank_code.should.eql("000");
             } else {
-              //console.log(resp)
+        //      console.log(resp)
               resp.should.be.ok;
               resp.isApproved().should.be.ok;
-              resp.code.should.eql("00");
-              resp.bank_code.should.equal("100");
+              resp.gateway.code.should.eql("00");
+              resp.bank.code.should.equal("100");
 
               resp.data.avs.should.eql(code);
             }
@@ -76,15 +76,15 @@ describe('AVS Responses', function(){
         }, function(err, resp){
 
           if(!avs[code]){
-            resp.code.should.eql("31");
+            resp.gateway.code.should.eql("31");
             err.code.should.eql("31");
-            resp.bank_code.should.eql("000");
+            resp.bank.code.should.eql("000");
           } else {
             //console.log(resp)
             resp.should.be.ok;
             resp.isApproved().should.be.ok;
-            resp.code.should.eql("00");
-            resp.bank_code.should.equal("100");
+            resp.gateway.code.should.eql("00");
+            resp.bank.code.should.equal("100");
 
             resp.data.avs.should.eql(code);
           }
@@ -98,8 +98,6 @@ describe('AVS Responses', function(){
 
   });
 
-
-  // TODO: test v14 since it has a different signature
 
 
 });
