@@ -18,18 +18,17 @@ describe('Connection Errors', function(){
     , cc_number: '4111111111111111'
     , cc_expiry: "0519"
     }, function(err, resp){
-
       err.should.be.ok;
       err.code.should.eql('ENOTFOUND')
       resp.isApproved().should.not.be.ok;
       resp.isSuccessful().should.not.be.ok;
       resp.isError().should.be.ok;
 
-      resp.code.should.eql('40');
-      resp.status.should.eql('Unable to Connect');
+      resp.gateway.code.should.eql('40');
+      resp.gateway.message.should.eql('Unable to Connect');
 
-      resp.bank_code.should.eql('000');
-      resp.bank_status.name.should.eql('No Answer');
+      resp.bank.code.should.eql('000');
+      resp.bank.name.should.eql('No Answer');
 
       done();
     });
@@ -52,12 +51,12 @@ describe('Connection Errors', function(){
       resp.isSuccessful().should.not.be.ok;
       resp.isError().should.be.ok;
 
-      resp.code.should.eql('-1');
+      resp.gateway.code.should.eql('-1');
       // 'Invalid signature received \'R6IM+8############\'.',
-      resp.status.should.eql('Invalid signature received');
+      resp.gateway.message.should.eql('Invalid signature received');
 
-      resp.bank_code.should.eql('000');
-      resp.bank_status.name.should.eql('No Answer');
+      resp.bank.code.should.eql('000');
+      resp.bank.name.should.eql('No Answer');
 
       done();
     });
