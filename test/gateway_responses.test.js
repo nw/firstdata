@@ -12,12 +12,7 @@ var firstdata = require('../')
 describe('Gateway Errors', function(){
 
   Object.keys(gateway_response).forEach(function(code){
-    if(code === '00'
-      //  || parseInt(code) < 0
-      // || code.indexOf('F') == -1
-       || code.match(/^[F-]/)
-      //  || code !== '13'
-      ) return;
+    if(code === '00' || code.match(/^[F-]/) ) return; // untestable
 
     it('should handle response error ('+code+') - '+ gateway_response[code], function(done){
       client.purchase({
@@ -26,19 +21,15 @@ describe('Gateway Errors', function(){
       , cc_number: '4111111111111111'
       , cc_expiry: "0519"
       }, function(err, resp){
-        //if(resp.code == '40') console.log('code ', code)
 
-//        return done();
-//console.log(err, resp);
-        //console.log(code, resp.headers.status, Object.keys(resp.data).length, resp.data.exact_message);
         err.should.be.an.instanceOf(Error);
         err.code.should.eql(code)
         resp.isApproved().should.not.be.ok;
         resp.isSuccessful().should.not.be.ok;
         resp.isError().should.be.ok;
 
-        resp.code.should.eql(code);
-        resp.status.should.eql(gateway_response[code]);
+        resp.gateway.code.should.eql(code);
+        resp.gateway.message.should.eql(gateway_response[code]);
 
         // if(resp.headers.status >= 400){
         //   //Server Error. Please contact Support. (43) - Invalid Logon
@@ -48,8 +39,8 @@ describe('Gateway Errors', function(){
         // }
 
 
-        resp.bank_code.should.eql('000');
-        resp.bank_status.name.should.eql('No Answer');
+        resp.bank.code.should.eql('000');
+        resp.bank.name.should.eql('No Answer');
 
         done();
       });
