@@ -1,12 +1,10 @@
 
-# First Data Global Gateway E4 - Payment Gateway
+    Node.js client for First Data Global Gateway [e4 api](https://firstdata.zendesk.com/entries/407571-First-Data-Global-Gateway-e4-Web-Service-API-Reference-Guide).
 
-This is to support First Data Global Gateway [e4 api](https://firstdata.zendesk.com/entries/407571-First-Data-Global-Gateway-e4-Web-Service-API-Reference-Guide).
-
-## Outline
+# Outline
 
 
-## Overview
+# Overview
 
 Trying to provide a well documented & tested interaction with the First Data api. I have found many things that are undocumented and inconsistent hence the need for a place to gather some sanity.
 
@@ -16,7 +14,7 @@ Focus is on version 12+ by implementing the required [SHA-1 HMAC hash](https://f
 
 Some error codes are currently "untestable" within the integration test environment. This library covers significantly more response types then what is listed in the documentation or any other library. Many undocumented responses have been found thus far. (See Test section for more info).
 
-## Features
+# Features
 
 * 100% test coverage
 * Over 300 integration tests.
@@ -45,14 +43,14 @@ Some error codes are currently "untestable" within the integration test environm
 * 24/7/365 instant live person support
 
 
-## Installation
+# Installation
 
 ```bash
   npm install firstdata
 ```
 
 
-## Setup
+# Setup
 
 Test Accounts are automatically provisioned, will remain active for 90 days with no activity. If you want a live account you must contact [First Data](http://www.firstdata.com/) directly.
 
@@ -75,7 +73,7 @@ Test Accounts are automatically provisioned, will remain active for 90 days with
 ** Note: You need to use Firefox for the login to work for some reason :(
 
 
-## Usage
+# Usage
 
 ```js
 
@@ -102,17 +100,17 @@ Test Accounts are automatically provisioned, will remain active for 90 days with
 
 ```
 
-## API
+# API
 
-### firstdata.Client
+## firstdata.Client
 
 Class for creating a First Data api client.
 
-### firstdata.Response
+## firstdata.Response
 
 Class for creating a First Data response object. A `Client` instance  automatically return this. See [Response Instance]()
 
-### firstdata.createClient(options, defaults)
+## firstdata.createClient(options, defaults)
 
 Wrapper to create a `firstdata.Client` instance.
 
@@ -156,26 +154,26 @@ __Note__: `gateway_id` & `password` are required for every transaction and are a
 
 Returns an instance of `Client`
 
-#### firstdata.isCountry(code)
+### firstdata.isCountry(code)
 
 Checks if a country code is
 
-#### firstdata.getCountry(code)
+### firstdata.getCountry(code)
 
-#### firstdata.isCurrency(code)
+### firstdata.isCurrency(code)
 
-#### firstdata.getCurrency(code)
+### firstdata.getCurrency(code)
 
-#### firstdata.isUnit(code)
+### firstdata.isUnit(code)
 
-#### firstdata.getUnit(code)
+### firstdata.getUnit(code)
 
-#### firstdata.isTax(code)
+### firstdata.isTax(code)
 
-#### firstdata.getTax(code)
+### firstdata.getTax(code)
 
 
-### Client Instance
+## Client Instance
 
 FirstData has several different types of transactions.
 
@@ -187,7 +185,7 @@ FirstData has several different types of transactions.
 
 
 
-#### client.send(transaction_type, payload, callback)
+### client.send(transaction_type, payload, callback)
 
 Generic wrapper for the API.
 
@@ -208,7 +206,7 @@ Generic wrapper for the API.
 * `88` : Reload - Gift Card
 * `89` : ValueLink Deactivation - Gift Card
 
-#### client.purchase(payload, callback)
+### client.purchase(payload, callback)
 
 `transaction_type` is automatically added to request as '00'.
 
@@ -236,38 +234,38 @@ TransArmor Transaction required fields:
 
 
 
-#### client.preauth(payload, callback)
+### client.preauth(payload, callback)
 
-#### client.preauthcomplete(payload, callback)
+### client.preauthcomplete(payload, callback)
 
-#### client.forcedPost(payload, callback)
+### client.forcedPost(payload, callback)
 
-#### client.refund(payload, callback)
+### client.refund(payload, callback)
 
-#### client.preauthOnly(payload, callback)
+### client.preauthOnly(payload, callback)
 
-#### client.paypalOrder(payload, callback)
+### client.paypalOrder(payload, callback)
 
-#### client.void(payload, callback)
+### client.void(payload, callback)
 
-#### client.taggedPreauthComplete(payload, callback)
+### client.taggedPreauthComplete(payload, callback)
 
-#### client.taggedVoid(payload, callback)
+### client.taggedVoid(payload, callback)
 
-#### client.taggedRefund(payload, callback)
+### client.taggedRefund(payload, callback)
 
-#### client.cashout(payload, callback)
+### client.cashout(payload, callback)
 
-#### client.activation(payload, callback)
+### client.activation(payload, callback)
 
-#### client.balanceInquiry(payload, callback)
+### client.balanceInquiry(payload, callback)
 
-#### client.reload(payload, callback)
+### client.reload(payload, callback)
 
-#### client.deactivation(payload, callback)
+### client.deactivation(payload, callback)
 
 
-### Response Instance
+## Response Instance
 
 __This object is frozen and read-only (immutable).__ : Trying to mutate will throw a `TypeError`
 
@@ -378,7 +376,7 @@ Requires the bank response to be `S` (successful). In addition the payload must 
 It is important to note that several bank responses will be successful yet will not pass the `isApproved` test like (164) - 'Conditional Approval - Hold shipping for 24 hours'.
 
 
-### Search
+## Search
 
 First Data returns csv. This
 
@@ -413,7 +411,7 @@ First Data returns csv. This
 ```
 
 
-### Report
+## Report
 
 ## POS (Card in Hand)
 
@@ -459,14 +457,14 @@ __Run Tests__  with `npm test` or `mocha`
 
 ### Untestable
 
-## Resources
+# Resources
 
-### API Documentation
+## API Documentation
 
 * [Web API Reference Guide](https://firstdata.zendesk.com/entries/407571-First-Data-Global-Gateway-e4-Web-Service-API-Reference-Guide)
 * [Search and Reporting API](https://firstdata.zendesk.com/entries/407573-First-Data-Global-Gateway-e4-Web-Service-Transaction-Search-and-Reporting-API)
 
-### Codes
+## Codes
 
 * [Gateway Response Codes](https://firstdata.zendesk.com/entries/451980-eCommerce-Response-Codes-ETG-e4-Transaction-Gateway-Codes-)
 * [Bank Response Code](https://firstdata.zendesk.com/entries/471297-First-Data-Global-Gateway-e4-Bank-Response-Codes)
@@ -481,24 +479,24 @@ __Run Tests__  with `npm test` or `mocha`
 * [Unit of Measure](https://firstdata.zendesk.com/entries/23393247-Units-of-Measure)
 
 
-### Testing
+## Testing
 
 * [Generating Unsuccessful Transactions](https://firstdata.zendesk.com/entries/407657-How-to-generate-unsuccessful-transactions-during-testing-)
 * [CVV testing](https://firstdata.zendesk.com/entries/407655-How-to-test-CVD-CVV-CVV2-functionality)
 * [AVS Testing](https://firstdata.zendesk.com/entries/23872458-How-to-test-AVS-Response-Codes-in-Demo)
 * [Test Credit Cards](https://firstdata.zendesk.com/entries/407651-using-test-credit-card-numbers)
 
-### Setup
+## Setup
 
 * [FirstData Test Account Setup](http://www.firstdata.com/gg/apply_test_account.htm)
 * [Setup Secure 3D](https://registration.altpayfirstdata.com/)
 
-### Other
+## Other
 
 * [Security Hashing](https://firstdata.zendesk.com/entries/22069302-API-Security-HMAC-Hash)
 
 
-## License
+# License
 
 (The MIT License)
 
