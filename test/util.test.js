@@ -87,7 +87,7 @@ describe('utils.parseXML', function(){
 
 });
 
-describe('deepFreeze', function(){
+describe('utils.deepFreeze', function(){
 
   it('should handle null props', function(){
     var error;
@@ -142,7 +142,7 @@ describe('deepFreeze', function(){
 
   });
 
-})
+});
 
 
 
