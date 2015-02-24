@@ -32,8 +32,8 @@ describe('CVD/CVV/CVV2 Responses', function(){
       }, function(err, resp){
         resp.should.be.ok;
         resp.isApproved().should.be.ok;
-        resp.code.should.eql("00");
-        resp.bank_code.should.equal("100");
+        resp.gateway.code.should.eql("00");
+        resp.bank.code.should.equal("100");
 
         resp.data.cvv2.should.eql(code);
 
@@ -43,8 +43,6 @@ describe('CVD/CVV/CVV2 Responses', function(){
     })
 
   });
-
-  // TODO: test v14 since it has a different signature
 
 
 });
