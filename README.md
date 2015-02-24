@@ -269,7 +269,7 @@ TransArmor Transaction required fields:
 
 ### Response Instance
 
-__This object is frozen and read-only (immutable).__
+__This object is frozen and read-only (immutable).__ : Trying to mutate will throw a `TypeError`
 
 With the exception of `search` & `report` all methods return an instance of `FirstDataResponse`.
 
@@ -277,15 +277,6 @@ It is important to note that regardless of errors `gateway` & `bank` responses a
 
 * `gateway`: is set to `40` (Unable to Connect)
 * `bank`: is set to `000` (No Answer)
-
-### Errors
-
-`FirstDataResponse` will explicitly create special error objects if the transactions don't meet specific criteria.
-
-* If a network error occurs from `https.request` then the error object is return. (connection reset, socket timeout, unable to connect).
-* If no network error and gateway response does not equal `00` then a `ResponseError` is created.
-* If no network error or `ResponseError` and `isSuccessful` == {false} then a `BankError` is created.
-
 
 ### Properties
 
@@ -325,6 +316,52 @@ __Bank Response Actions__
 * `Voice`: Perform a voice authorization per First Data instructions.
 * `Call`: Call First Data.
 
+### Errors
+
+`FirstDataResponse` will explicitly create special error objects if the transactions don't meet specific criteria.
+
+* If a network error occurs from `https.request` then the error object is return. (connection reset, socket timeout, unable to connect).
+* If no network error and gateway response != `00` then a `ResponseError` is created.
+* If no network error or `ResponseError` and `isSuccessful` == {false} then a `BankError` is created.
+
+#### ResponseError
+
+Inherits from `Error`
+
+```js
+var ResponseError = require('firstdata').errors.ResponseError;
+var err = new ResponseError(obj);
+
+err instanceof ResponseError; // true
+err instanceof Error; // true
+```
+
+__Properties__
+
+* `name`: 'FirstDataResponseError'
+* `code`: gateway response code
+* `message`: message for code
+
+#### BankError
+
+Inherits from `Error`
+
+```js
+var BankError = require('firstdata').errors.BankError;
+var err = new BankError(obj);
+
+err instanceof BankError; // true
+err instanceof Error; // true
+```
+
+__Properties__
+
+* `name`: 'FirstDataBankResponseError'
+* `code`: bank response code
+* `type`: type of response code (see chart below)
+* `action`: action to perform on response (see below)
+* `message`: message for code
+* `description`: description about the error code
 
 ### Methods
 
