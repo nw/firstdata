@@ -1,5 +1,5 @@
 
-    Node.js client for First Data Global Gateway [e4 api](https://firstdata.zendesk.com/entries/407571-First-Data-Global-Gateway-e4-Web-Service-API-Reference-Guide).
+Node.js client for First Data Global Gateway [e4 api](https://firstdata.zendesk.com/entries/407571-First-Data-Global-Gateway-e4-Web-Service-API-Reference-Guide).
 
 # Outline
 
