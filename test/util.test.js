@@ -1,5 +1,6 @@
 var fs = require('fs')
   , libxml = require('libxmljs')
+  , should = require('should')
   , utils = require('../').utils;
 
 var xml = fs.readFileSync(__dirname +'/fixture/output.xml');
@@ -82,6 +83,63 @@ describe('utils.parseXML', function(){
   it('should return json from libxmljs Node', function(){
     var root = libxml.parseXmlString(xml, { noblanks: true });
     checkXML(utils.parseXML(root));
+  });
+
+});
+
+describe('deepFreeze', function(){
+
+  it('should handle null props', function(){
+    var error;
+    try {
+      utils.deepFreeze({test: null});
+    } catch(e) {
+      error = e;
+    }
+
+    should.not.exist(error);
+  });
+
+  it('should handle error object props', function() {
+    var error;
+    try {
+      utils.deepFreeze({test: new Error('error')});
+    } catch(e) {
+      error = e;
+    }
+
+    should.not.exist(error);
+
+  });
+
+  it('should throw when changing prop', function(){
+    var err
+      , obj = utils.deepFreeze({prop: 'test'});
+
+    try {
+      obj.prop = 'change';
+    } catch(e) {
+      error = e;
+    }
+
+    error.should.be.ok;
+    error.should.be.instanceOf(Error);
+
+  });
+
+  it('should throw when adding prop', function(){
+    var err
+      , obj = utils.deepFreeze({prop: 'test'});
+
+    try {
+      obj.newprop = 'change';
+    } catch(e) {
+      error = e;
+    }
+
+    error.should.be.ok;
+    error.should.be.instanceOf(Error);
+
   });
 
 })
