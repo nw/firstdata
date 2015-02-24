@@ -451,7 +451,8 @@ The majority of the tests are integration tests with FirstData E4 Gateway. In or
 , "sandbox": true
 , "admin": { "username": "<USERNAME>", "password": "<PASSWORD>"}
 }
-    ```
+```
+
 __Run Tests__  with `npm test` or `mocha`
 
 
