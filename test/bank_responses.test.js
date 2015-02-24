@@ -28,11 +28,12 @@ describe('Bank Responses', function(){
             resp.isSuccessful().should.be.ok;
             resp.isError().should.not.be.ok;
 
-            resp.code.should.eql("00");
+            resp.gateway.code.should.eql("00");
 
+            resp.statusCode.should.be.below(400);
             resp.headers.status.should.be.below(400);
 
-            resp.bank_code.should.eql(code);
+            resp.bank.code.should.eql(code);
 
             resp.data.bank_resp_code.should.eql(code);
             // disabling for now
@@ -64,15 +65,16 @@ describe('Bank Responses', function(){
               resp.isSuccessful().should.not.be.ok;
               resp.isError().should.be.ok;
 
-              resp.code.should.eql("00");
+              resp.gateway.code.should.eql("00");
 
+              resp.statusCode.should.be.below(400);
               resp.headers.status.should.be.below(400);
 
-              resp.bank_code.should.eql(code);
+              resp.bank.code.should.eql(code);
 
               resp.data.bank_resp_code.should.eql(code);
               // disabling for now
-              resp.data.bank_message.should.eql(bank_response[code].original || bank_response[code].name)
+              resp.data.bank_message.should.eql(bank_response[code].actual || bank_response[code].name)
 
               done();
             });
